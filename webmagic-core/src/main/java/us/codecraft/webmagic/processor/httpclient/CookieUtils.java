@@ -81,11 +81,11 @@ public class CookieUtils {
                     List<Cookie> cookies = cookieStore.getCookies();
                     for (Cookie c : cookies) {
                         cookie.append(c.getName()).append("=").append(c.getValue()).append(";");
-                        if (c.getName().equals("_tb_token_")) {
+//                        if (c.getName().equals("_tb_token_")) {
                             String tokenStr = c.getValue();
-                            System.out.println("cookies ===="+tokenStr);
+//                            System.out.println("cookies ===="+tokenStr);
 
-                        }
+//                        }
                     }
                 }
             }
@@ -94,6 +94,7 @@ public class CookieUtils {
         } finally {
             httpPost.abort();
         }
+        System.out.println(cookie.toString());
         return cookie.toString();
     }
 }
