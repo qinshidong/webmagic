@@ -1,5 +1,6 @@
-package us.codecraft.webmagic.downloader.selenium;
+package us.codecraft.webmagic.utils;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -8,7 +9,7 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.apache.log4j.Logger;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -25,7 +26,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  *         Date: 13-7-26 <br>
  *         Time: 下午1:41 <br>
  */
-public class WebDriverPool {
+ public class WebDriverPool {
 	private Logger logger = Logger.getLogger(getClass());
 
 	private final static int DEFAULT_CAPACITY = 5;

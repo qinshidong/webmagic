@@ -1,18 +1,15 @@
-package us.codecraft.webmagic.downloader.selenium;
+package us.codecraft.webmagic.utils;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Request;
 import us.codecraft.webmagic.Site;
 import us.codecraft.webmagic.Task;
 import us.codecraft.webmagic.downloader.Downloader;
-import us.codecraft.webmagic.selector.Html;
 import us.codecraft.webmagic.selector.PlainText;
 
 import java.io.Closeable;
@@ -31,7 +28,7 @@ public class SeleniumDownloader implements Downloader, Closeable {
 
 	private volatile WebDriverPool webDriverPool;
 
-	private Logger logger = LoggerFactory.getLogger(getClass());
+	private Logger logger = Logger.getLogger(getClass());
 
 	private int sleepTime = 0;
 
@@ -108,7 +105,7 @@ public class SeleniumDownloader implements Downloader, Closeable {
 		String content = webElement.getAttribute("outerHTML");
 		Page page = new Page();
 		page.setRawText(content);
-		page.setHtml(new Html(content, request.getUrl()));
+//        page.setHtml(new Html(content, request.getUrl()));
 		page.setUrl(new PlainText(request.getUrl()));
 		page.setRequest(request);
 		webDriverPool.returnToPool(webDriver);
@@ -132,4 +129,6 @@ public class SeleniumDownloader implements Downloader, Closeable {
 	public void close() throws IOException {
 		webDriverPool.closeAll();
 	}
+
+
 }

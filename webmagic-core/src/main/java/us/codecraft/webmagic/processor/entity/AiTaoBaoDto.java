@@ -63,7 +63,7 @@ public class AiTaoBaoDto {
 
     @Override
     public String toString() {
-        return "AiTaoBaoDto{" +
+        return "{" +
                 "clickUrl='" + clickUrl + '\'' +
                 ", description='" + description + '\'' +
                 ", nick='" + nick + '\'' +
