@@ -2,7 +2,6 @@ package us.codecraft.webmagic.processor.example;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.thoughtworks.selenium.Selenium;
 import jdk.nashorn.internal.parser.JSONParser;
 import org.openqa.selenium.WebDriver;
 import us.codecraft.webmagic.*;

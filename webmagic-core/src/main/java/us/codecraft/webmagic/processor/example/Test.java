@@ -1,13 +1,12 @@
 package us.codecraft.webmagic.processor.example;
 
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 public class Test {
@@ -25,9 +24,30 @@ public class Test {
 
     public static void main(String[] args) throws IOException {
         WebDriver webDriver = Test.getChromeDriver();
-        webDriver.get("https://www.taobao.com/");
+        webDriver.get("https://ai.taobao.com/search/index.htm?key=JK&taoke_type=1&pnum=1");
         System.out.println(" Page title is: " +webDriver.getTitle());
-        webDriver.navigate().to("https://login.taobao.com/");
+        String pageSource = webDriver.getPageSource();
+//        System.out.println(pageSource);
+
+        List<WebElement> elements = webDriver.findElements(By.xpath("//*[@id=\"mx_5\"]/ul/li"));
+        int rowCout = elements.size();
+        for (int i = 1; i < rowCout + 1; i++){
+            String link = elements.get(i-1).findElement(By.xpath("//*[@id=\"mx_5\"]/ul/li["+i+"]/a")).getAttribute("href");
+//            String img = elements.get(i).findElement(By.xpath("//*[@id=\"mx_5\"]/ul/li["+i+"]/a")).getCssValue("pc-items-item-img img-loaded");
+            String img = elements.get(i-1).findElement(By.xpath("//*[@id=\"mx_5\"]/ul/li["+i+"]/a/img")).getAttribute("src");
+
+            System.out.println(i+"link==="+link);
+            System.out.println(i+"src==="+img);
+
+        }
+//        for (WebElement el: elements) {
+////            System.out.println(el.findElement(By.linkText("//*[@id=\"mx_5\"]/ul/li[1]/a")).getText());
+////            System.out.println(el.toString());
+//            List<WebElement> elements1 = el.findElements(By.xpath("//*[@id=\"mx_5\"]/ul/li/a"));
+//            System.out.println(elements1.toArray().toString());
+////            System.out.println(text);
+//        }
+//        webDriver.navigate().to("https://login.taobao.com/");
         //帐号密码登陆方式作废，需滑块验证，较难，无法处理。
 //        webDriver.findElement(By.cssSelector("#fm-login-id")).sendKeys("ycabiding@163.com");
 //        webDriver.findElement(By.cssSelector("#fm-login-password")).sendKeys("ycabiding@163.com");
@@ -36,15 +56,15 @@ public class Test {
 //        webDriverBean.clickByCss(webDriver,"#login-form > div.fm-btn > button");
         //此处为扫二维码登陆，需要人为介入，否则系统判定为机器操作，直接拦截
         //debug执行代码，扫完二维码后直接放行
-        ((JavascriptExecutor) webDriver).executeScript("document.querySelector(\"#login > div.corner-icon-view.view-type-qrcode > i\").click()", args);
+//        ((JavascriptExecutor) webDriver).executeScript("document.querySelector(\"#login > div.corner-icon-view.view-type-qrcode > i\").click()", args);
         //此处睡眠三十秒
-        baseSleep(30);
-        WebDriver.Options manage = webDriver.manage();
-        Set<Cookie> cookies = manage.getCookies();
-        for (Cookie cookie : cookies) {
-            System.out.println("cookie = " + cookie);
-        }
-
+//        baseSleep(30);
+//        WebDriver.Options manage = webDriver.manage();
+//        Set<Cookie> cookies = manage.getCookies();
+//        for (Cookie cookie : cookies) {
+//            System.out.println("cookie = " + cookie);
+//        }
+        webDriver.close();
     }
 
     //静默处理
