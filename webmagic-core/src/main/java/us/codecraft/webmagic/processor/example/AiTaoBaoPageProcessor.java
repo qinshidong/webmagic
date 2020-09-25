@@ -24,13 +24,9 @@ import java.util.regex.Pattern;
  */
 public class AiTaoBaoPageProcessor implements PageProcessor {
 
-    private final  String cookie = "__wpkreporterwid_=2f011b9b-0c7b-4cb2-362d-8220680d66fc; _uab_collina=160013630816567772773542; t=f95c1dbc23ad910e67b36b67a9fd3146; UM_distinctid=1748b267fbf40d-047f38064ecb34-333769-1fa400-1748b267fc0c9c; thw=cn; lego2_cna=PRER5YMWHYYRT5YC5YUM2CP5; hng=CN%7Czh-CN%7CCNY%7C156; __wpkreporterwid_=25468e2c-6be7-4956-10c6-c9341985f0d2; CNZZDATA30076816=cnzz_eid%3D669265322-1600060067-https%253A%252F%252Ffun.fanli.com%252F%26ntime%3D1600671657; _samesite_flag_=true; cookie2=13d6ad311e7f1657c49fccce8b1bd00b; enc=ygDughRIuVoDdh8HDJU9xftFD6rZXXQRPacrnwP4Xty0oKrzq2OyJwqZ3hvTjj%2BPrArgmXK0P9coRfMooEwBGg%3D%3D; xlly_s=1; _tb_token_=3e55f3e854ee; ctoken=UkX81eifenmXugLp15X-XAK9; mt=ci=0_0; tracknick=; cna=9MflFywxwXoCAW7ksVTTkbgp; _m_h5_tk=3af83c3bbff0e43a181cc9d09d957919_1600770874952; _m_h5_tk_enc=10e9768404b69c6dc0086eb194c09b78; tfstk=ckifBV2xHsfbka8N0x9z_Wdj_brNwQ6QCENmhqMpzNuLOW1mpMPQUt0G6gULF; l=eBEVVMuROz9DVnToXOfanurza77OSIRYYuPzaNbMiOCP9DfB5YUFWZr6dlL6C3GVh6uMR3uV-FgpBeYBqQAonxvTX2uPIODmn; isg=BGBg3T9bK8oi2Jf4ifTwcA7TMW4yaUQzqcBOLNpxLHsO1QD_gnkUwzbnbX3V5fwL";
 
     private Site site = Site.me()//.setHttpProxy(new HttpHost("127.0.0.1",8888))
-            .setRetryTimes(3).setSleepTime(3000).setUseGzip(true).
-                    addHeader("cookie",
-                            cookie
-                    )
+            .setRetryTimes(3).setSleepTime(3000).setUseGzip(true)
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
             .setCycleRetryTimes(3);
 
@@ -48,11 +44,11 @@ public class AiTaoBaoPageProcessor implements PageProcessor {
 //        page.addTargetRequests(page.getHtml().css("//*[@id='J_myshop_list'] a").links().all()); //获取列表的超链接地址并通过该地址访问里面的网页
         //获取爱淘宝中商品的js
 
-        page.putField("title", page.getHtml().xpath("//*[@id=\"mx_5\"]/ul").get());
+//        page.putField("title", page.getHtml().xpath("//*[@id=\"mx_5\"]/ul").get());
+////        page.putField("shops", page.getHtml().xpath("//*[@class='page-search']/script"));
 //        page.putField("shops", page.getHtml().xpath("//*[@class='page-search']/script"));
-        page.putField("shops", page.getHtml().xpath("//*[@class='page-search']/script"));
-//        page.putField("description", page.getHtml().xpath("//*[@id='J_mmbuy_list']/li[1]/div[2]/div[3]"));
-        page.putField("url",page.getUrl());
+////        page.putField("description", page.getHtml().xpath("//*[@id='J_mmbuy_list']/li[1]/div[2]/div[3]"));
+//        page.putField("url",page.getUrl());
 
     }
 
@@ -67,13 +63,13 @@ public class AiTaoBaoPageProcessor implements PageProcessor {
 //            Spider spider = new Spider(null);
             for (PageUtil page : pageUtils) {
                 //single download
-                Thread.sleep(7000);
+//                Thread.sleep(7000);
                 Spider spider = Spider.create(new AiTaoBaoPageProcessor()).thread(5).setDownloader(new SeleniumDownloader("D:\\Desktop\\chromedriver.exe"));
                 try{
                 int count = 0;
 
                 //ppage为真实页码 淘宝每页120条 每60条需要加载一次 所以page = ppage*2
-                String urlTemplate = "https://ai.taobao.com/search/index.htm?pid=mm_13127418_7884048_45121550473&unid=F05xmsisdxjp05ne4dj0&key=JK&taoke_type=1&ppage="+page.getPpage()+"&page="+page.getPage();
+                String urlTemplate = "https://uland.taobao.com/coupon/edetail?e=cFBEoslKlsMNfLV8niU3R40dlhWtfp96Ng4Gqf8CT4BnmB%2Fzds2ljSSxQ1cRqlZLJ%2F8ytUO09fYAbAN3NcqP1djiLvKBoQ2vzOJz0K1X%2B2oksUNXEapWSyqjiTw6s%2FKtkRTSfA3ryOGuTpni7PzgNWYYYSHre8qc4iDT2OF5pmCie%2FpBy9wBFg%3D%3D&&app_pvid=59590_11.169.46.202_531_1600998690143&ptl=floorId:34371;app_pvid:59590_11.169.46.202_531_1600998690143;tpp_pvid:100_11.230.60.226_10140_7751600998690150001&union_lens=lensId%3AOPT%401600998690%400ba92eca_d6fb_174c2f54e65_6e23%4001";
                 String key = "JK";
                 ResultItems resultItems = spider.<ResultItems>get(urlTemplate); 
                 Object shops = resultItems.get("shops");
