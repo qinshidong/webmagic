@@ -92,13 +92,13 @@ public class WebDriverPool {
 			}
 			// "phantomjs_driver_path"
 			if (sConfig.getProperty("phantomjs_driver_path") != null) {
-				System.out.println("Test will use an external GhostDriver");
+				System.out.println("Test222 will use an external GhostDriver");
 				sCaps.setCapability(
 						PhantomJSDriverService.PHANTOMJS_GHOSTDRIVER_PATH_PROPERTY,
 						sConfig.getProperty("phantomjs_driver_path"));
 			} else {
 				System.out
-						.println("Test will use PhantomJS internal GhostDriver");
+						.println("Test222 will use PhantomJS internal GhostDriver");
 			}
 		}
 

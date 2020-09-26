@@ -28,6 +28,7 @@ public class AiTaoBaoPageProcessor implements PageProcessor {
     private Site site = Site.me()//.setHttpProxy(new HttpHost("127.0.0.1",8888))
             .setRetryTimes(3).setSleepTime(3000).setUseGzip(true)
             .setUserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.102 Safari/537.36")
+            .addHeader("cookies","thw=cn; miid=954637331616787875; lid=wuyuan_001; _l_g_=Ug%3D%3D; lgc=wuyuan_001; cookie1=UNjVCmUoYPqubehnMAH7ISdDmJvKkQYykcRFRIYxa%2BY%3D; lLtC1_=1; existShop=MTYwMTExMTQ5OQ%3D%3D; cookie2=1d55986c4a7abe3d4b1afb3d969339e7; sg=15f; cna=xPP1FxAek1ICAW7k9tQfgCqD; skt=e1c87829b179674e; _tb_token_=5ee8883ebe736; xlly_s=1; dnk=wuyuan_001; hng=CN%7Czh-CN%7CCNY%7C156; uc1=cookie16=UtASsssmPlP%2Ff1IHDsDaPRu%2BPw%3D%3D&cookie15=UIHiLt3xD8xYTw%3D%3D&existShop=false&cookie14=Uoe0bHb0MDwUhQ%3D%3D&cookie21=WqG3DMC9Eman&pas=0; uc3=nk2=FOx1QcpuOgHh3w%3D%3D&vt3=F8dCufePf6eI5JehJac%3D&id2=UUphw2eZQavrVz%2B%2BGg%3D%3D&lg2=VFC%2FuZ9ayeYq2g%3D%3D; tracknick=wuyuan_001; uc4=id4=0%40U2grGNhgag237jFAQDTpaJ3kbUoUf6FX&nk4=0%40Fmd01z6tWWn18%2BmrGrUBOt43Cnc2; unb=2209247964625; XSRF-TOKEN=489ef3bf-9ede-4dc6-bf7e-d7cfa05d6ee0; tfstk=c3UCBVGL9pvQ1jsy8W1ZUlVAHiuPZ0OjNMM3OkgCOIW9ujFCifLqhfR3qLLtDf1..; _samesite_flag_=true; _cc_=VFC%2FuZ9ajQ%3D%3D; l=eBIOxhLROy9gfJ3BBOfZnurza779OIRVguPzaNbMiOCP9L1H5XoCWZr3fd8MCnGcnsQDRuASn5QgBqTiEy4Uh6Yl3ZCzxcjZVdBG.; cookie17=UUphw2eZQavrVz%2B%2BGg%3D%3D; _nk_=wuyuan_001; sgcookie=E100nWOdEjJBM6WFKFt%2FoKaLtw2ITJogF%2BTRQZytaCxUKuOJSWzLT3oet7yYWpS7%2FQHqHUEfQ0EVuNJy5nLaQOyoUg%3D%3D; t=d3f675164256e4ac3d3c52ceed3cf993; csg=28851d3e; v=0; lc=VyT1ROY1D7MuuknrKCJm; isg=BLy8yVXHzyCUHvt8QGIg1XS2jVputWDfWo9TO5Y966eIYV7rvsZ-bkNTRYgZKZg3; cookieCheck=42317")
             .setCycleRetryTimes(3);
 
     //process（抓取过程）
@@ -69,7 +70,7 @@ public class AiTaoBaoPageProcessor implements PageProcessor {
                 int count = 0;
 
                 //ppage为真实页码 淘宝每页120条 每60条需要加载一次 所以page = ppage*2
-                String urlTemplate = "https://uland.taobao.com/coupon/edetail?e=cFBEoslKlsMNfLV8niU3R40dlhWtfp96Ng4Gqf8CT4BnmB%2Fzds2ljSSxQ1cRqlZLJ%2F8ytUO09fYAbAN3NcqP1djiLvKBoQ2vzOJz0K1X%2B2oksUNXEapWSyqjiTw6s%2FKtkRTSfA3ryOGuTpni7PzgNWYYYSHre8qc4iDT2OF5pmCie%2FpBy9wBFg%3D%3D&&app_pvid=59590_11.169.46.202_531_1600998690143&ptl=floorId:34371;app_pvid:59590_11.169.46.202_531_1600998690143;tpp_pvid:100_11.230.60.226_10140_7751600998690150001&union_lens=lensId%3AOPT%401600998690%400ba92eca_d6fb_174c2f54e65_6e23%4001";
+                String urlTemplate = "https://s.click.taobao.com/t?e=m%3D2%26s%3DqR6IQ9Lvd%2F9w4vFB6t2Z2ueEDrYVVa64qYbrUZilZ4UKwPl3T8wu7P1Dur9W78u5B12aBPe3rCc1sZpe12KEHNdlXPHrc%2BQOwhsKX1LNgs810JKatjRt8HaQEJ4dc9gIyubz7oN6u5OCW2MUr2mWG3EqY%2Bakgpmw&scm=null&pvid=100_172.18.173.199_10893_7331601084065341697&app_pvid=59590_11.88.165.231_545_1601084065333&ptl=floorId:34371;originalFloorId:34371;pvid:100_172.18.173.199_10893_7331601084065341697;app_pvid:59590_11.88.165.231_545_1601084065333&union_lens=lensId%3AOPT%401601084065%400b58a5e7_abd6_174c80c0700_5fab%4001";
                 String key = "JK";
                 ResultItems resultItems = spider.<ResultItems>get(urlTemplate); 
                 Object shops = resultItems.get("shops");
