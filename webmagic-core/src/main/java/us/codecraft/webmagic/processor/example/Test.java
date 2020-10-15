@@ -1,24 +1,17 @@
 package us.codecraft.webmagic.processor.example;
 
-import com.alibaba.fastjson.JSON;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import org.openqa.selenium.*;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeDriverService;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.interactions.Actions;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Stream;
 
 public class Test {
 
@@ -34,8 +27,9 @@ public class Test {
         options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
 
         if(cookies != null && !"".equals(cookies)){
-            options.addArguments("cookies="+"UM_distinctid=1748b267fbf40d-047f38064ecb34-333769-1fa400-1748b267fc0c9c; thw=cn; hng=CN%7Czh-CN%7CCNY%7C156; enc=ygDughRIuVoDdh8HDJU9xftFD6rZXXQRPacrnwP4Xty0oKrzq2OyJwqZ3hvTjj%2BPrArgmXK0P9coRfMooEwBGg%3D%3D; mt=ci=0_0; tracknick=; cna=9MflFywxwXoCAW7ksVTTkbgp; miid=908805321437727521; lLtC1_=1; _m_h5_tk=c4806d72bcf359659191a42c4def1bbd_1601115898523; _m_h5_tk_enc=bed178763dba8042b87ce2694a98860c; xlly_s=1; cookie2=17529db8f8716b9cc79308fe74d55670; t=79329c77a3ca127e54d41af41a97aee9; _tb_token_=e937e5f061eb3; v=0; l=eBEVVMuROz9DVOHGBO5wnurza77OEQRjHsPzaNbMiInca6i5sQYDxNQ4xyWH-dtjgt5jcexyNxVOSR36Sy4_WjkDBeYIOC0eQn9B1e1..; tfstk=cCVGBOcFtRk1nhD3F1G_PCc7g0bRaQRqqSPQTWv2bJ7gAFaS7sDMLLW6WwmgjSpf.; isg=BKKiGassCZKZdRV-Hz7SHkA58ygE86YN7CBDHOw7zpXAv0I51IP2HSgt6f1DtB6l");
+            options.addArguments("cookie="+cookies);
         }
+
         WebDriver derver = new ChromeDriver(options);
 
 //        service = new ChromeDriverService.Builder().usingDriverExecutable(new File("D:/Desktop/chromedriver.exe")).usingAnyFreePort().build();
@@ -45,16 +39,26 @@ public class Test {
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {
+        List<String> list = new ArrayList<>();
+//        list.add("https://s.click.taobao.com/t?e=m%3D2%26s%3DMHhZXPvtiblw4vFB6t2Z2ueEDrYVVa64Vb0yt%2F5tJWX%2BmkB8Ys0cBa1pAOKD%2FdwChh%2B1tlF6mDX5r45Wg077gW1aRFN3r8%2FX7n%2Fj8bo2oExDUJPUIHN4EtjXjs1HhSd5fghaZJ1GY5nGDF1NzTQoPw%3D%3D&scm=null&pvid=100_172.18.173.199_10893_7331601084065341697&app_pvid=59590_11.88.165.231_545_1601084065333&ptl=floorId:34371;originalFloorId:34371;pvid:100_172.18.173.199_10893_7331601084065341697;app_pvid:59590_11.88.165.231_545_1601084065333&union_lens=lensId%3AOPT%401601084065%400b58a5e7_abd6_174c80c0700_5fae%4001");
+        list.add("https://uland.taobao.com/coupon/edetail?e=cFBEoslKlsMNfLV8niU3R40dlhWtfp96Ng4Gqf8CT4BnmB%2Fzds2ljSSxQ1cRqlZLJ%2F8ytUO09fYAbAN3NcqP1djiLvKBoQ2vzOJz0K1X%2B2oksUNXEapWSyqjiTw6s%2FKtkRTSfA3ryOGuTpni7PzgNWYYYSHre8qc4iDT2OF5pmCie%2FpBy9wBFg%3D%3D&&app_pvid=59590_11.20.219.202_17446_1601196201916&ptl=floorId:34371;app_pvid:59590_11.20.219.202_17446_1601196201916;tpp_pvid:100_11.12.127.100_530_4231601196201924251&union_lens=lensId%3AOPT%401601196202%400b14dbca_cc5f_174cebb185c_4e6c%4001");
         //从本地获取cookies
         String cookies = readFileByChars("D://Desktop/cookies1.txt");
 
         WebDriver webDriver = Test.getChromeDriver(cookies);
+        for (String url : list) {
+//            webDriver.navigate().to(url);
+            detailAiTaoBao(url, webDriver);
+        }
 
-        String url = "https://s.click.taobao.com/t?e=m%3D2%26s%3DMHhZXPvtiblw4vFB6t2Z2ueEDrYVVa64Vb0yt%2F5tJWX%2BmkB8Ys0cBa1pAOKD%2FdwChh%2B1tlF6mDX5r45Wg077gW1aRFN3r8%2FX7n%2Fj8bo2oExDUJPUIHN4EtjXjs1HhSd5fghaZJ1GY5nGDF1NzTQoPw%3D%3D&scm=null&pvid=100_172.18.173.199_10893_7331601084065341697&app_pvid=59590_11.88.165.231_545_1601084065333&ptl=floorId:34371;originalFloorId:34371;pvid:100_172.18.173.199_10893_7331601084065341697;app_pvid:59590_11.88.165.231_545_1601084065333&union_lens=lensId%3AOPT%401601084065%400b58a5e7_abd6_174c80c0700_5fae%4001";
-        webDriver.get(url);
+    }
+
+    public static void detailAiTaoBao(String url,WebDriver webDriver) throws IOException, InterruptedException {
+
+        webDriver.navigate().to(url);
 
         //先打开网页再加载cookies
-        webDriver.navigate().refresh();
+//        webDriver.navigate().refresh();
 
         Thread.sleep(1000);
 //        System.out.println(" Page title is: " + webDriver.getTitle()); //页面title
@@ -62,6 +66,13 @@ public class Test {
         //睡眠 防反爬取机制拦击
 //        Thread.sleep(200);//等待0.2秒
 //        String pageSource = webDriver.getPageSource(); //获取页面
+
+        try{
+            //对异常弹窗进行处理
+            webDriver.switchTo().alert().accept();
+        }catch (Exception e){
+//            e.printStackTrace();
+        }
 
         try {
             //有优惠券页面
@@ -73,17 +84,32 @@ public class Test {
         //睡眠1秒 防反爬取机制拦击
         Thread.sleep(200);//等待0.2秒
 
+        try{
+            //对异常弹窗进行处理
+            webDriver.switchTo().alert().accept();
+        }catch (Exception e){
+//            e.printStackTrace();
+        }
+
         //商品名称
         String shopName = webDriver.findElement(By.id("J_Title")).getText();
 
         String specTitle = webDriver.findElement(By.xpath("//*[@id=\"J_isku\"]/div/dl[1]/dt")).getText();
 
-        List<WebElement> detailImgElement = webDriver.findElements(By.xpath("//*[@id=\"J_DivItemDesc\"]/div/div/img"));
-
+        //店家ID
+        String sellerid = webDriver.findElement(By.xpath("//*[@id=\"J_Pine\"]")).getAttribute("data-sellerid");
+        System.out.println("店家ID==="+sellerid);
+        //商品ID
+        String itemid = webDriver.findElement(By.xpath("//*[@id=\"J_Pine\"]")).getAttribute("data-itemid");
+        System.out.println("商品ID==="+itemid);
         //总库存
         String stockAll = webDriver.findElement(By.xpath("//*[@id=\"J_SpanStock\"]")).getText();
 
-        if(detailImgElement.size() == 0){
+        String descText = webDriver.findElement(By.xpath("//*[@id=\"J_DivItemDesc\"]")).getAttribute("innerText");
+
+        Thread.sleep(500);
+
+        if(Integer.parseInt(stockAll) == 2 || "描述加载中".equals(descText)){
             //登陆淘宝
             loginAiTaoBao(webDriver, url);
 
@@ -159,19 +185,28 @@ public class Test {
             System.out.println("属性列表----" + rotationImg);
         }
 
-        //商品详情图列表
-       detailImgElement = webDriver.findElements(By.xpath("//*[@id=\"J_DivItemDesc\"]/div/div/img"));
-        System.out.println();
+        //商品详情图列表(注意懒加载)
+        List<WebElement> detailImgElement = webDriver.findElements(By.xpath("//*[@id=\"J_DivItemDesc\"]//img"));
+//        System.out.println();
         for (int i = 1; i < detailImgElement.size() + 1; i++) {
-            String detailImg = detailImgElement.get(i - 1).findElement(By.xpath("//*[@id=\"J_DivItemDesc\"]/div/div/img[" + i + "]")).getAttribute("src");
+                Thread.sleep(600);
+                    String src = detailImgElement.get(i - 1).getAttribute("src");
+
+                    //过滤懒加载的图
+                    if(src.contains(sellerid)){
+                        System.out.println("商品详情图片----"+src);
+                    }else{
+                        src = detailImgElement.get(i - 1).getAttribute("data-ks-lazyload");
+                        System.out.println("商品详情图片lazy----"+src);
+                    }
 
             //属性列表
-            System.out.println("商品详情图片----" + detailImg);
         }
-
+        System.out.println(
+                1
+        );
         webDriver.close();
     }
-
     //静默处理
     private static void baseSleep(int n) {
         try {
@@ -278,7 +313,7 @@ public class Test {
 
 //            reflush(webDriver); //重新登
 //
-//            //滑动登陆
+              //滑动登陆
 //            WebElement draggable = webDriver.findElement(By.id("nc_1_n1z"));//定位元素
 //            Actions bu = new Actions(webDriver); // 声明action对象
 //            bu.clickAndHold(draggable).build().perform(); // clickAndHold鼠标左键按下draggable元素不放
@@ -321,7 +356,7 @@ public class Test {
             int tempchar;
             String cookies = "";
             while ((tempchar = reader.read()) != -1) {
-                //对于windows下，rn这两个字符在一起时，表示一个换行。
+                //对于windows下，rn这两个字符在一起时，表示一个换行。-+
                 //但如果这两个字符分开显示时，会换两次行。
                 //因此，屏蔽掉r，或者屏蔽n。否则，将会多出很多空行。
                 if (((char) tempchar) != 'r') {
